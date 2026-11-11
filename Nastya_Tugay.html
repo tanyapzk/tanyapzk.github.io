@@ -264,7 +264,7 @@ cta:'let’s make something together',
 more:'continues: the people behind the garden',
 sec:[
 {t:'HR',d:['For me, HR is much more than processes and resource management. It is work with culture, leadership, talent development and the team’s experience. I care about understanding the business, seeing a person’s potential and creating an environment where people can grow, take responsibility and feel connected to what they create.','Perhaps that is why, in many of my projects, HR goes beyond the usual format. I connect team development with art, design, local culture and creative practices, turning corporate events into an experience that can be lived and remembered.']},
-{t:'Projects · Brand days',d:['Days when a brand becomes a place and a team becomes a story. Each one is made by hand and remembered by the people in it.']},
+{t:'Brand days',d:['Days when a brand becomes a place and a team becomes a story. Each one is made by hand and remembered by the people in it.']},
 {t:'Events & master classes',d:['Events from the first idea to the day itself. I find people with a craft — florists, artists, chefs — and turn what they do into master classes our teams remember.']},
 {t:'Behind the scenes',d:['The story before the event: preparation, and how everything comes together.']},
 {t:'Set design',d:['I shape a space so that it tells the story of a brand before a single word is spoken: colour, material, light, flowers, the way things are arranged. Every detail is chosen by hand and checked on site.']},
@@ -283,7 +283,7 @@ const cvr=(v,p,r='3/2')=>`<div class="cv" style="aspect-ratio:${r};margin:18px 0
 const wide=i=>ph(i,'aspect-ratio:4/3;margin:22px 0'),pair=i=>`<div style="display:flex;gap:8px;margin:22px 0">${ph(i,'aspect-ratio:1;flex:1')}${ph(i+1,'aspect-ratio:1;flex:1')}</div>`;
 const collage=()=>`<div class="col">${ph(3,'').replace('class="ph"','class="ph a"')}${ph(0,'aspect-ratio:4/3')}${ph(2,'aspect-ratio:4/3')}${ph(1,'aspect-ratio:4/3')}</div>`;
 const flow=(ps,c)=>c+ps.map((p,i)=>`<p class="tx">${p}</p>`+(i==1?wide(2):i==3?pair(3):'')).join('');
-function secHTML(k){const g=GT(),s=g.sec[k];let h=`<p class="eb">(0${k+1}) ${S[k].k}</p><h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">${S[k].ja}</p>`;
+function secHTML(k){const g=GT(),s=g.sec[k];let h=`<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">${S[k].ja}</p>`;
  if(k==1)h+=`<p class="tx">${s.d[0]}</p><p class="hand" style="margin-top:20px">pick one ↓</p>`+g.days.map((x,i)=>`<button class="day" data-d="${i}">${cvr(DC[i],DP[i],'16/10').replace('margin:18px 0;','')}<span class="row"><span>(0${i+1})</span><span>[MONTH YEAR] · [CITY]</span></span><span class="row"><b>[${x.b} / ${x.n}]</b></span></button>`).join('');
  else h+=(k==6?flow(s.d,cvr('p10','50% 50%')):cvr(k==0?'q4':'p'+(k+4),'50% 50%')+s.d.map(p=>`<p class="tx">${p}</p>`).join('')+collage());
  return h+`<div class="nx"><button id="nx2">${k<6?'next: '+g.sec[k+1].t+' →':'← all work'}</button></div>`}
