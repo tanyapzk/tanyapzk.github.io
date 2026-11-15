@@ -287,7 +287,7 @@ const wide=i=>ph(i,'aspect-ratio:4/3;margin:22px 0'),pair=i=>`<div style="displa
 const collage=()=>`<div class="col">${ph(3,'').replace('class="ph"','class="ph a"')}${ph(0,'aspect-ratio:4/3')}${ph(2,'aspect-ratio:4/3')}${ph(1,'aspect-ratio:4/3')}</div>`;
 const collageHR=()=>`<div class="col"><div class="cv a" style="background-image:var(--n6);background-position:50% 35%"></div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n7);background-position:50% 30%"></div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n8);background-position:50% 25%"></div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n9);background-position:50% 30%"></div></div>`;
 const flow=(ps,c)=>c+ps.map((p,i)=>`<p class="tx">${p}</p>`+(i==1?wide(2):i==3?pair(3):'')).join('');
-function secHTML(k){const g=GT(),s=g.sec[k];if(k==5&&typeof printHTML==='function')return printHTML(g,s);let h=`<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">${S[k].ja}</p>`;
+function secHTML(k){const g=GT(),s=g.sec[k];if(k==5&&typeof printHTML==='function')return printHTML(g,s);if(k==4&&typeof setHTML==='function')return setHTML(g,s);let h=`<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">${S[k].ja}</p>`;
  if(k==1)h+=`<p class="tx">${s.d[0]}</p><p class="hand" style="margin-top:20px">pick one ↓</p>`+g.days.map((x,i)=>`<button class="day" data-d="${i}">${cvr(DC[i],DP[i],'16/10').replace('margin:18px 0;','')}<span class="row"><span>(0${i+1})</span><span>[MONTH YEAR] · [CITY]</span></span><span class="row"><b>${x.b} / ${x.n}</b></span></button>`).join('');
  else h+=(k==6?cvr('p10','50% 50%')+s.d.map((p,i)=>`<p class="tx">${p}</p>`+(i==1?`<div class="cv" style="aspect-ratio:4/3;margin:22px 0;background-image:var(--n1);background-position:50% 55%"></div>`:i==3?`<div style="display:flex;gap:8px;margin:22px 0"><div class="cv" style="aspect-ratio:1;flex:1;background-image:var(--n2);background-position:50% 45%"></div><div class="cv" style="aspect-ratio:1;flex:1;background-image:var(--n3);background-position:50% 40%"></div></div>`:'')).join('')+`<div class="col4"><div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n5);background-position:50% 35%"></div><p class="t4">The curve of a stem can matter more than the flower itself.</p></div><div class="cv" style="aspect-ratio:3/5;background-image:var(--n4);background-position:50% 20%"></div></div>`:cvr(k==0?'q4':'p'+(k+4),'50% 50%')+s.d.map(p=>`<p class="tx">${p}</p>`).join('')+(k==0?collageHR():collage()));
  return h+`<div class="nx"><button id="nx2">${k<6?'next: '+g.sec[k+1].t+' →':'← all work'}</button></div>`}
@@ -360,7 +360,7 @@ function zhHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
  +`<div class="zin">${zi(7675,'4/3','50% 50%')}${zi(8552,'3/4','62% 50%','position:absolute;right:-6px;bottom:-34px;width:38%;box-shadow:0 6px 18px rgba(60,50,40,.18);border:4px solid var(--bg)')}</div>`
  +t(5)
  +`<div class="ztri">${zi(7650,'2/3','50% 50%')}${zi('table','2/3','45% 50%')}${zi(8087,'2/3','50% 40%')}</div>`
- +`<div class="zvr"><video class="vd" style="aspect-ratio:9/16" src="${ZV}" autoplay muted loop playsinline></video><div><p class="hand">the talk: how a product becomes a story ↓</p>${zi(9768,'4/5','50% 30%')}</div></div>`
+ +`<div class="zvr"><video class="vd" style="aspect-ratio:9/16" src="${ZV}" autoplay muted loop playsinline></video><div><p class="hand">getting the photos ready for the task ↓</p>${zi(9768,'4/5','50% 30%')}</div></div>`
  +t(6)+zi('0001','3/2','50% 50%','margin:26px 0 0')
  +`<div class="nx"><button data-b="1">← all days</button><button data-d="2">next: ${g.days[2].t} →</button></div>`}
 </script>
@@ -381,7 +381,7 @@ function mdHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
  +cvr(DC[0],DP[0])
  +t(0)
  +`<div class="mnum"><b>9</b><p class="hand">years since the last<br>brand day for the store team</p></div>`
- +`<div class="mstep">${mi(8544,'2/3','50% 50%')}${mi(6454,'2/3','50% 50%','margin-top:48px')}</div>`
+ +`<div class="mstep">${mi('9y','2/3','35% 50%')}${mi(6454,'2/3','50% 50%','margin-top:48px')}</div>`
  +t(1)
  +`<div class="mside">${mi(6006,'auto','50% 50%','height:100%')}<div>${mi(8061,'3/4','50% 50%')}${mi(6697,'3/4','40% 50%')}</div></div>`
  +t(2)
@@ -408,7 +408,7 @@ function mdHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
 const pi=(n,r,p,x='')=>`<div class="cv" style="aspect-ratio:${r};background-image:var(--pr_${n});background-position:${p};${x}"></div>`;
 function printHTML(g,s){const t=x=>`<p class="tx">${x}</p>`,grp=(l,x)=>`<p class="prh">${l}</p><p class="tx" style="color:var(--mute)">${x}</p>`;
  return `<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">印刷・ブランディング</p>`
- +`<div class="prdip">${pi('oy_3802','3/4','50% 40%')}${pi('oy_1676','3/4','50% 40%')}</div>`
+ +`<div class="prdip">${pi('oy_1676','3/4','50% 40%')}${pi('oy_3802','3/4','50% 40%')}</div>`
  +t('Print is the part of an event that people take home. A card on the seat, a label on a bottle, an invitation with your own name on it — small things, but they are often what guests remember and keep.')
  +t('I design every printed piece by hand and as part of one story: the same palette, the same mood and the same idea as the space around it. I choose the paper, the texture, the format and the print quality myself, and check every detail before the day.')
  +t('Nothing is generic. Each brand day gets its own visual language — from the first invitation to the last sticker.')
@@ -422,6 +422,39 @@ function printHTML(g,s){const t=x=>`<p class="tx">${x}</p>`,grp=(l,x)=>`<p class
  +pi('oy_5331','3/2','50% 50%','margin:18px 0 8px')+`<div class="prtwo">${pi('zh_IMG_2402','3/4','50% 50%')}${pi('oy_polaroid','3/4','45% 55%')}</div>`
  +`<p class="hand" style="margin:18px 0 0">every small thing in its place</p>`
  +`<div class="nx"><button id="nx2">next: ${g.sec[6].t} →</button></div>`}
+</script>
+<style>:root{--sd_zh_8195:url(nastasija-media/sd_zh_8195.jpg);--sd_md_8724:url(nastasija-media/sd_md_8724.jpg);--sd_zh_6876:url(nastasija-media/sd_zh_6876.jpg);--sd_md_8730:url(nastasija-media/sd_md_8730.jpg);--sd_oy_IMG_2949:url(nastasija-media/sd_oy_IMG_2949.jpg);--sd_oy_2608:url(nastasija-media/sd_oy_2608.jpg);--sd_oy_studio:url(nastasija-media/sd_oy_studio.jpg);--sd_md_8599:url(nastasija-media/sd_md_8599.jpg);--sd_md_8727:url(nastasija-media/sd_md_8727.jpg);--sd_zh_7682:url(nastasija-media/sd_zh_7682.jpg);--sd_zh_6804:url(nastasija-media/sd_zh_6804.jpg);--sd_oy_4693:url(nastasija-media/sd_oy_4693.jpg);--sd_oy_4926:url(nastasija-media/sd_oy_4926.jpg);--sd_oy_4959:url(nastasija-media/sd_oy_4959.jpg);--sd_oy_2286:url(nastasija-media/sd_oy_2286.jpg);--sd_md_9763:url(nastasija-media/sd_md_9763.jpg);--sd_zh_9658:url(nastasija-media/sd_zh_9658.jpg);--sd_oy_2514:url(nastasija-media/sd_oy_2514.jpg);--sd_zh_9659:url(nastasija-media/sd_zh_9659.jpg);--sd_oy_2032:url(nastasija-media/sd_oy_2032.jpg);--sd_oy_4957:url(nastasija-media/sd_oy_4957.jpg);--m9y:url(nastasija-media/m9y.jpg)}
+.sdh{margin:30px 0 8px;font-size:15px;font-weight:500}
+.sdb{margin:6px 0 18px}
+.sd2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sdb2{display:grid;grid-template-columns:3fr 2fr;gap:8px}.sdb2>*:first-child{grid-row:1/3;height:100%}
+.sdpol{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px;padding:0 4px}
+.sdpol .cv{border:6px solid var(--card);border-bottom-width:18px;box-shadow:0 6px 16px rgba(60,50,40,.14)}
+.sdpol .cv:nth-child(4n+1){transform:rotate(-1.5deg)}.sdpol .cv:nth-child(4n+2){transform:rotate(1.2deg)}.sdpol .cv:nth-child(4n+3){transform:rotate(1deg)}.sdpol .cv:nth-child(4n){transform:rotate(-1.2deg)}
+.sdm5{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.sdm5>*:first-child{grid-column:1/3;grid-row:1/3;height:100%}
+</style>
+<script>
+const si=(n,r,p='50% 50%',x='')=>`<div class="cv" style="aspect-ratio:${r};background-image:var(--sd_${n});background-position:${p};${x}"></div>`;
+function setHTML(g,s){const grp=(l,x)=>`<p class="sdh">${l}</p><p class="tx" style="color:var(--mute)">${x}</p>`;
+ return `<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">空間デザイン</p>`+cvr('p8','50% 50%')
+ +`<p class="tx">I shape a space so that it tells the story of a brand before a single word is spoken: colour, material, light, flowers, the way things are arranged. Every detail is chosen by hand and checked on site.</p>`
+ +grp('(01) THE SPACE','First the room: its light, its walls, how people will move through it.')
+ +`<div class="sdb">${si('zh_8195','3/2')}</div>`
+ +`<div class="sdb sd2">${si('md_8724','3/4')}${si('zh_6876','3/4')}</div>`
+ +`<div class="sdb">${si('md_8730','3/2')}</div>`
+ +`<div class="sdb"><div class="sdb2">${si('oy_IMG_2949','auto','50% 60%')}${si('oy_2608','3/4')}${si('oy_studio','3/4','50% 50%')}</div><p class="hand">the studio and the rooftop</p></div>`
+ +grp('(02) THE DETAILS','Flowers, objects, the light from a window. I place every one of them, then walk the room as a guest would — and move things until it feels right.')
+ +`<div class="sdb sdpol">${['md_8599','md_8727','zh_7682','zh_6804','oy_4693','oy_4926'].map(n=>si(n,'4/5')).join('')}</div>`
+ +grp('(03) THE TABLE','Food is part of the set, not a break from it. The menu follows the same palette and mood as the room: berries in silver cups, green vegetables on white linen, small desserts laid out like a still life.')
+ +`<div class="sdb sdm5">${si('oy_4959','auto')}${['oy_2286','md_9763','zh_9658','oy_2514','zh_9659'].map(n=>si(n,'1/1')).join('')}</div>`
+ +`<div class="sdb sd2">${si('oy_2032','3/4')}${si('oy_4957','3/4')}</div>`
+ +`<p class="hand" style="margin:26px 0 0">walk the room as a guest would</p>`
+ +`<div class="nx"><button id="nx2">next: ${g.sec[5].t} →</button></div>`}
+// swipe right inside an open section = go back one screen
+(()=>{let x0=null,y0s=null;
+ ov.addEventListener('touchstart',e=>{const t=e.touches[0];x0=(e.touches.length===1&&!e.target.closest('.gal'))?t.clientX:null;y0s=t.clientY},{passive:true});
+ ov.addEventListener('touchend',e=>{if(x0==null)return;const t=e.changedTouches[0],dx=t.clientX-x0,dy=Math.abs(t.clientY-y0s);x0=null;
+  if(dx>70&&dy<60&&!document.querySelector('#lb.show'))back()},{passive:true});})();
 </script>
 <script>applyLang("en")</script>
 </body>
