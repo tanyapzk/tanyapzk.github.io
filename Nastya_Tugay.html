@@ -182,11 +182,14 @@ const DAYS=[{t:'[BRAND / TITLE]',w:'[MONTH YEAR] · [CITY]'},{t:'[BRAND / TITLE]
 const gal=n=>`<div class="cnt">01 / 0${n}</div><div class="gal">${Array.from({length:n},(_,i)=>ph(i+2)).join('')}</div>`;
 
 // grid: checkerboard, white cards open sections, photos open the same section
+const GAL=['https://gelatin.gallery.photo/gallery/massimo-dutti-mskeyd/','https://gelatin.gallery.photo/gallery/zara-home-belarus-oip2j3/','https://gelatin.gallery.photo/gallery/oysho-belarus-9xzsyw/'];
+const galBtn=i=>`<p style="margin:30px 0 0"><a class="b" href="${GAL[i]}" target="_blank" rel="noopener">SEE ALL PHOTOS ↗</a></p>`;
+var NX=k=>k+1===2?3:k+1; // events tab removed
 const g=$('#grid');
-S.forEach((s,k)=>{
-  const c=`<button class="tile card" data-s="${k}"><strong>${s.k}</strong><small>(0${k+1})</small></button>`;
+let gj=0;S.forEach((s,k)=>{if(k===2)return;const n=gj++;
+  const c=`<button class="tile card" data-s="${k}"><strong>${s.k}</strong><small>(0${n+1})</small></button>`;
   const p=`<button class="tile" data-s="${k}" aria-label="Open ${s.t}" style="background-image:var(--p${k+4});background-position:${POS[k]}"></button>`;
-  g.insertAdjacentHTML('beforeend',k%2?p+c:c+p);
+  g.insertAdjacentHTML('beforeend',n%2?p+c:c+p);
 });
 
 // overlay
@@ -290,13 +293,13 @@ const flow=(ps,c)=>c+ps.map((p,i)=>`<p class="tx">${p}</p>`+(i==1?wide(2):i==3?p
 function secHTML(k){const g=GT(),s=g.sec[k];if(k==5&&typeof printHTML==='function')return printHTML(g,s);if(k==4&&typeof setHTML==='function')return setHTML(g,s);let h=`<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">${S[k].ja}</p>`;
  if(k==1)h+=`<p class="tx">${s.d[0]}</p><p class="hand" style="margin-top:20px">pick one ↓</p>`+g.days.map((x,i)=>`<button class="day" data-d="${i}">${cvr(DC[i],DP[i],'16/10').replace('margin:18px 0;','')}<span class="row"><span>(0${i+1})</span><span>[MONTH YEAR] · [CITY]</span></span><span class="row"><b>${x.b} / ${x.n}</b></span></button>`).join('');
  else h+=(k==6?cvr('p10','50% 50%')+s.d.map((p,i)=>`<p class="tx">${p}</p>`+(i==1?`<div class="cv" style="aspect-ratio:4/3;margin:22px 0;background-image:var(--n1);background-position:50% 55%"></div>`:i==3?`<div style="display:flex;gap:8px;margin:22px 0"><div class="cv" style="aspect-ratio:1;flex:1;background-image:var(--n2);background-position:50% 45%"></div><div class="cv" style="aspect-ratio:1;flex:1;background-image:var(--n3);background-position:50% 40%"></div></div>`:'')).join('')+`<div class="col4"><div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n5);background-position:50% 35%"></div><p class="t4">The curve of a stem can matter more than the flower itself.</p></div><div class="cv" style="aspect-ratio:3/5;background-image:var(--n4);background-position:50% 20%"></div></div>`:cvr(k==0?'q4':'p'+(k+4),'50% 50%')+s.d.map(p=>`<p class="tx">${p}</p>`).join('')+(k==0?collageHR():collage()));
- return h+`<div class="nx"><button id="nx2">${k<6?'next: '+g.sec[k+1].t+' →':'← all work'}</button></div>`}
+ return h+`<div class="nx"><button id="nx2">${k<6?'next: '+g.sec[NX(k)].t+' →':'← all work'}</button></div>`}
 function dayHTML(i){const g=GT(),d=g.days[i];
  if(i==0)return mdHTML(g,d);
  if(i==1)return zhHTML(g,d);
  if(i==2)return oyshoHTML(g,d);
  return `<p class="eb">0${i+1} / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">[MONTH YEAR] · [CITY]</p>`+flow(d.d,cvr(DC[i],DP[i]))+(i==0?`<p style="margin-top:28px"><button data-d="3">${g.more} →</button></p>`:'')+`<div class="nx"><button data-b="1">← all days</button>${i<3?`<button data-d="${i+1}">next: ${g.days[i+1].t} →</button>`:''}</div>`}
-ob.addEventListener('click',e=>{if(e.target.closest('#nx2')){const k=view.s;if(k<6){view={s:k+1};show(secHTML(k+1))}else closeS()}});
+ob.addEventListener('click',e=>{if(e.target.closest('#nx2')){const k=view.s;if(k<6){view={s:NX(k)};show(secHTML(NX(k)))}else closeS()}});
 function applyLang(l){L=l;const g=GT();$$('[data-i]').forEach(el=>{const k=el.dataset.i;el.textContent=/^a\d$/.test(k)?g.a[+k[1]]:g[k]});
  [['en','en'],['ru','ru'],['jp','ja']].forEach(([id,c])=>$('#'+id).className=c===l?'on':'');document.documentElement.lang=l;
  if(view){view.d!=null?show(dayHTML(view.d),0):show(secHTML(view.s),0)}}
@@ -325,7 +328,7 @@ function oyshoHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
  +t(4)+t(5)
  +`<div class="ovt"><div>${oi(5497,'3/4','40% 50%')}<p class="hand">towels up, music on</p></div><div style="margin-top:40px">${oi(5719,'4/3','50% 35%')}${oi(5468,'4/3','50% 55%')}</div></div>`
  +t(6)+oi(6478,'6599/5279','50% 50%','margin:26px 0 0')
- +`<div class="nx"><button data-b="1">← all days</button><button data-d="3">next: ${g.days[3].t} →</button></div>`}
+ +`${galBtn(2)}<div class="nx"><button data-b="1">← all days</button><button data-d="3">next: ${g.days[3].t} →</button></div>`}
 // tap a photo or video inside a section to see it larger
 document.body.insertAdjacentHTML('beforeend','<div id="lb" role="dialog" aria-label="Photo"><button class="x">× close</button><div id="lbi" style="display:contents"></div></div>');
 const lb=$('#lb');
@@ -362,7 +365,7 @@ function zhHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
  +`<div class="ztri">${zi(7650,'2/3','50% 50%')}${zi('table','2/3','45% 50%')}${zi(8087,'2/3','50% 40%')}</div>`
  +`<div class="zvr"><video class="vd" style="aspect-ratio:9/16" src="${ZV}" autoplay muted loop playsinline></video><div><p class="hand">getting the photos ready for the task ↓</p>${zi(9768,'4/5','50% 30%')}</div></div>`
  +t(6)+zi('0001','3/2','50% 50%','margin:26px 0 0')
- +`<div class="nx"><button data-b="1">← all days</button><button data-d="2">next: ${g.days[2].t} →</button></div>`}
+ +`${galBtn(1)}<div class="nx"><button data-b="1">← all days</button><button data-d="2">next: ${g.days[2].t} →</button></div>`}
 </script>
 <style>:root{--m8544:url(nastasija-media/m8544.jpg);--m6454:url(nastasija-media/m6454.jpg);--m6006:url(nastasija-media/m6006.jpg);--m8061:url(nastasija-media/m8061.jpg);--m6697:url(nastasija-media/m6697.jpg);--m7313:url(nastasija-media/m7313.jpg);--m9083:url(nastasija-media/m9083.jpg);--m9075:url(nastasija-media/m9075.jpg);--m8147:url(nastasija-media/m8147.jpg);--m0585:url(nastasija-media/m0585.jpg);--m8331:url(nastasija-media/m8331.jpg);--m0634:url(nastasija-media/m0634.jpg);--m0280:url(nastasija-media/m0280.jpg);--m7229:url(nastasija-media/m7229.jpg);--m6962:url(nastasija-media/m6962.jpg);--m7226:url(nastasija-media/m7226.jpg);--m9978:url(nastasija-media/m9978.jpg)}
 .mnum{display:flex;align-items:flex-end;gap:14px;margin:22px 0 26px}.mnum b{font-size:96px;line-height:.8;font-weight:500;letter-spacing:-.04em}.mnum .hand{margin:0 0 4px}
@@ -393,7 +396,7 @@ function mdHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
  +t(5)
  +`<div class="mstair">${mi(7229,'2/3','40% 50%')}${mi(6962,'2/3','50% 50%')}${mi(7226,'2/3','50% 40%')}</div>`
  +mi(9978,'4/5','50% 60%','margin:26px 0 0')
- +`<p style="margin-top:28px"><button data-d="3">${g.more} →</button></p>`
+ +galBtn(0)+`<p style="margin-top:28px"><button data-d="3">${g.more} →</button></p>`
  +`<div class="nx"><button data-b="1">← all days</button><button data-d="1">next: ${g.days[1].t} →</button></div>`}
 </script>
 <style>:root{--pr_md_5859:url(nastasija-media/pr_md_5859.jpg);--pr_md_5880:url(nastasija-media/pr_md_5880.jpg);--pr_md_6389:url(nastasija-media/pr_md_6389.jpg);--pr_md_6965:url(nastasija-media/pr_md_6965.jpg);--pr_md_9591:url(nastasija-media/pr_md_9591.jpg);--pr_oy_1676:url(nastasija-media/pr_oy_1676.jpg);--pr_oy_2512:url(nastasija-media/pr_oy_2512.jpg);--pr_oy_3802:url(nastasija-media/pr_oy_3802.jpg);--pr_oy_3861:url(nastasija-media/pr_oy_3861.jpg);--pr_table:url(nastasija-media/pr_table.jpg);--pr_oy_4751:url(nastasija-media/pr_oy_4751.jpg);--pr_oy_4785:url(nastasija-media/pr_oy_4785.jpg);--pr_oy_5276:url(nastasija-media/pr_oy_5276.jpg);--pr_oy_5331:url(nastasija-media/pr_oy_5331.jpg);--pr_oy_polaroid:url(nastasija-media/pr_oy_polaroid.jpg);--pr_zh_7751:url(nastasija-media/pr_zh_7751.jpg);--pr_zh_8872:url(nastasija-media/pr_zh_8872.jpg);--pr_zh_9491:url(nastasija-media/pr_zh_9491.jpg);--pr_zh_9645:url(nastasija-media/pr_zh_9645.jpg);--pr_zh_IMG_2402:url(nastasija-media/pr_zh_IMG_2402.jpg)}
