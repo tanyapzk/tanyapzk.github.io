@@ -455,11 +455,22 @@ function setHTML(g,s){const grp=(l,x)=>`<p class="sdh">${l}</p><p class="tx" sty
  +`<div class="sdb sd2">${si('oy_2032','3/4')}${si('oy_4957','3/4')}</div>`
  +`<p class="hand" style="margin:26px 0 0">walk the room as a guest would</p>`
  +`<div class="nx"><button id="nx2">next: ${g.sec[5].t} →</button></div>`}
-// swipe right inside an open section = go back one screen
-(()=>{let x0=null,y0s=null;
- ov.addEventListener('touchstart',e=>{const t=e.touches[0];x0=(e.touches.length===1&&!e.target.closest('.gal'))?t.clientX:null;y0s=t.clientY},{passive:true});
- ov.addEventListener('touchend',e=>{if(x0==null)return;const t=e.changedTouches[0],dx=t.clientX-x0,dy=Math.abs(t.clientY-y0s);x0=null;
-  if(dx>70&&dy<60&&!document.querySelector('#lb.show'))back()},{passive:true});})();
+// swipe right inside an open section = go back one screen (follows the finger, then slides away)
+(()=>{let x0=null,y0=null,drag=false;const E='transform .24s cubic-bezier(.2,.7,.3,1), opacity .24s';
+ const reset=el=>{el.style.transition='';el.style.transform='';el.style.opacity=''};
+ ov.addEventListener('touchstart',e=>{const t=e.touches[0];x0=(e.touches.length===1&&!document.querySelector('#lb.show'))?t.clientX:null;y0=t.clientY;drag=false;ob.style.transition='none'},{passive:true});
+ ov.addEventListener('touchmove',e=>{if(x0==null)return;const t=e.touches[0],dx=t.clientX-x0,dy=t.clientY-y0;
+  if(!drag){if(Math.abs(dx)>12&&Math.abs(dx)>Math.abs(dy)*1.3&&dx>0)drag=true;else if(Math.abs(dy)>12){x0=null;return}}
+  if(drag){ob.style.transform=`translateX(${Math.max(0,dx)*.8}px)`;ob.style.opacity=String(1-Math.min(.5,dx/600))}},{passive:true});
+ ov.addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;
+  if(!drag){reset(ob);return}drag=false;
+  if(dx<70){ob.style.transition=E;ob.style.transform='';ob.style.opacity='';setTimeout(()=>reset(ob),260);return}
+  const inDay=view&&view.d!=null;
+  if(inDay){ob.style.transition=E;ob.style.transform='translateX(100%)';ob.style.opacity='0';
+   setTimeout(()=>{back();ob.style.transition='none';ob.style.transform='translateX(-24px)';ob.style.opacity='0';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ob.style.transition=E;ob.style.transform='';ob.style.opacity='';setTimeout(()=>reset(ob),260)}))},220)}
+  else{ov.style.transition=E;ov.style.transform='translateX(100%)';ov.style.opacity='0';
+   setTimeout(()=>{closeS();reset(ov);reset(ob)},240)}},{passive:true});})();
 </script>
 <style>:root{--bt_root_IMG_7989:url(nastasija-media/bt_root_IMG_7989.jpg);--bt_root_IMG_7990:url(nastasija-media/bt_root_IMG_7990.jpg);--bt_root_IMG_7991:url(nastasija-media/bt_root_IMG_7991.jpg);--bt_md_8141:url(nastasija-media/bt_md_8141.jpg);--bt_md_8118:url(nastasija-media/bt_md_8118.jpg);--bt_md_8354:url(nastasija-media/bt_md_8354.jpg);--bt_oy_3855:url(nastasija-media/bt_oy_3855.jpg);--bt_oy_4013:url(nastasija-media/bt_oy_4013.jpg);--bt_zh_7158:url(nastasija-media/bt_zh_7158.jpg);--bt_zh_IMG_2215:url(nastasija-media/bt_zh_IMG_2215.jpg);--bt_fl_8577:url(nastasija-media/bt_fl_8577.jpg);--bt_piu_6526:url(nastasija-media/bt_piu_6526.jpg);--bt_piu_6588:url(nastasija-media/bt_piu_6588.jpg);--bt_piu_6379:url(nastasija-media/bt_piu_6379.jpg);--bt_fl_8555:url(nastasija-media/bt_fl_8555.jpg);--bt_fl_IMG_3114:url(nastasija-media/bt_fl_IMG_3114.jpg);--bt_fl_8701:url(nastasija-media/bt_fl_8701.jpg);--bt_paper_1763:url(nastasija-media/bt_paper_1763.jpg);--bt_paper_1682:url(nastasija-media/bt_paper_1682.jpg);--bt_paper_1687:url(nastasija-media/bt_paper_1687.jpg);--bt_ik_1285:url(nastasija-media/bt_ik_1285.jpg);--bt_ik_1397:url(nastasija-media/bt_ik_1397.jpg);--bt_ik_1941:url(nastasija-media/bt_ik_1941.jpg)}
 .galb{background:var(--bg2);border-color:transparent}
@@ -482,14 +493,14 @@ const PBH=[['(01) CLAY','PIU CERAMICS','Clay, shaped slowly and by hand.','potte
  ['(03) PAPER','MARINA','Paper made sheet by sheet.','paper',['paper_1763','paper_1682','paper_1687']],
  ['(04) IKEBANA','KIRILL & ANASTASIA','Line, form and the space between.','ikebana',['ik_1285','ik_1397','ik_1941']]];
 function btsHTML(g,s){const t=x=>`<p class="tx">${x}</p>`;
- return `<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">舞台裏</p>`+`<div class="cv" style="aspect-ratio:3/2;margin:18px 0;background-image:url(nastasija-media/bts_cover.jpg);background-position:50% 45%"></div>`
+ return `<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">舞台裏</p>`+cvr('p7','50% 50%')
  +t('The story before the event: preparation, and how everything comes together.')
  +t('Before anyone walks in, there are days of sorting, wrapping, printing, testing and setting. This is the part nobody sees — and the part I love most.')
- +`<div class="btr3">${bi('root_IMG_7989','2/3')}${bi('root_IMG_7990','2/3')}${bi('root_IMG_7991','2/3')}</div>`+bh('cards, ribbons and tags — the night before','right')
+ +`<div class="btr3">${bi('root_IMG_7989','2/3')}${bi('root_IMG_7990','2/3')}${bi('root_IMG_7991','2/3')}</div>`+bh('cards, ribbons and tags — the night before','right')+`<div class="btoff"><div class="cv" style="aspect-ratio:4/5;background-image:url(nastasija-media/bt_napkins.jpg);background-position:50% 50%"></div><div class="cv" style="aspect-ratio:4/5;margin-top:44px;background-image:url(nastasija-media/bts_cover.jpg);background-position:55% 50%"></div></div>`+bh('linen knotted by hand, flowers placed one by one')
  +`<div class="btb2">${bi('md_8141','auto','50% 40%')}<div>${bi('md_8118','3/4')}${bi('md_8354','3/4')}</div></div>`
  +`<div class="btoff">${bi('oy_3855','3/4')}${bi('oy_4013','3/4','50% 50%','margin-top:44px')}</div>`+bh('the studio, an hour before the club')
  +`<div class="btvr">${bv('zh')}<div>${bi('zh_7158','3/4')}${bi('zh_IMG_2215','3/4')}</div></div>`+bh('last flowers, last touches','right')
- +`<p style="margin:30px 0 0"><button class="b galb" data-pb="1">MASSIMO DUTTI · THE PEOPLE BEHIND THE GARDEN →</button></p>`
+ +`<p style="margin:30px 0 0"><button class="b galb" data-pb="1">meet the hands behind the garden →</button></p>`
  +`<div class="nx"><button id="nx2">next: ${g.sec[4].t} →</button></div>`}
 function pbHTML(g,d){const t=x=>`<p class="tx">${x}</p>`,PB=d.d;
  const hero=(h,i)=>{const v=bv(h[3]),ph=`<div>${bi(h[4][0],'4/5','50% 40%')}${bi(h[4][1],'1/1')}</div>`;
