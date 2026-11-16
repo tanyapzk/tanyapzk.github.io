@@ -474,6 +474,8 @@ function setHTML(g,s){const grp=(l,x)=>`<p class="sdh">${l}</p><p class="tx" sty
 </script>
 <style>:root{--bt_root_IMG_7989:url(nastasija-media/bt_root_IMG_7989.jpg);--bt_root_IMG_7990:url(nastasija-media/bt_root_IMG_7990.jpg);--bt_root_IMG_7991:url(nastasija-media/bt_root_IMG_7991.jpg);--bt_md_8141:url(nastasija-media/bt_md_8141.jpg);--bt_md_8118:url(nastasija-media/bt_md_8118.jpg);--bt_md_8354:url(nastasija-media/bt_md_8354.jpg);--bt_oy_3855:url(nastasija-media/bt_oy_3855.jpg);--bt_oy_4013:url(nastasija-media/bt_oy_4013.jpg);--bt_zh_7158:url(nastasija-media/bt_zh_7158.jpg);--bt_zh_IMG_2215:url(nastasija-media/bt_zh_IMG_2215.jpg);--bt_fl_8577:url(nastasija-media/bt_fl_8577.jpg);--bt_piu_6526:url(nastasija-media/bt_piu_6526.jpg);--bt_piu_6588:url(nastasija-media/bt_piu_6588.jpg);--bt_piu_6379:url(nastasija-media/bt_piu_6379.jpg);--bt_fl_8555:url(nastasija-media/bt_fl_8555.jpg);--bt_fl_IMG_3114:url(nastasija-media/bt_fl_IMG_3114.jpg);--bt_fl_8701:url(nastasija-media/bt_fl_8701.jpg);--bt_paper_1763:url(nastasija-media/bt_paper_1763.jpg);--bt_paper_1682:url(nastasija-media/bt_paper_1682.jpg);--bt_paper_1687:url(nastasija-media/bt_paper_1687.jpg);--bt_ik_1285:url(nastasija-media/bt_ik_1285.jpg);--bt_ik_1397:url(nastasija-media/bt_ik_1397.jpg);--bt_ik_1941:url(nastasija-media/bt_ik_1941.jpg)}
 .galb{background:var(--bg2);border-color:transparent}
+.nx{border-top:0!important;padding-top:0!important;gap:8px;margin-top:34px;font-size:12.5px}.nx button{flex:1;background:var(--bg2);padding:12px 14px;text-align:left}.nx button:last-child:not(:first-child){text-align:right}
+.pbl{margin:34px 0 0}.pbl .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--mute);font-size:12.5px;color:inherit;text-decoration:none}.pbl .row span:last-child{color:var(--mute)}
 .pbc{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:18px 0 22px}
 .btr3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:22px 0 0}
 .btb2{display:grid;grid-template-columns:3fr 2fr;gap:8px;margin:18px 0 8px}.btb2>div{display:flex;flex-direction:column;gap:8px}.btb2>.cv{height:100%}
@@ -488,6 +490,7 @@ function setHTML(g,s){const grp=(l,x)=>`<p class="sdh">${l}</p><p class="tx" sty
 const bi=(n,r,p='50% 50%',x='')=>`<div class="cv" style="aspect-ratio:${r};background-image:var(--bt_${n});background-position:${p};${x}"></div>`;
 const bv=(n,r='9/16')=>`<video class="vd" style="aspect-ratio:${r}" src="nastasija-media/bt_v_${n}.mp4" autoplay muted loop playsinline></video>`;
 const bh=(t,al='left')=>`<p class="hand" style="text-align:${al};margin:8px 0 22px">${t}</p>`;
+const PEOPLE=[['Piu Ceramics','clay',''],['Darya Gurinovich','flowers',''],['Marina','paper',''],['Kirill & Anastasia','ikebana','']]; // add links (Instagram / site) as the 3rd value
 const PBH=[['(01) CLAY','PIU CERAMICS','Clay, shaped slowly and by hand.','pottery',['piu_6526','piu_6588','piu_6379']],
  ['(02) FLOWERS','DARYA GURINOVICH','Flowers grown, cut and carried in from the garden.','flowers',['fl_8555','fl_IMG_3114','fl_8701']],
  ['(03) PAPER','MARINA','Paper made sheet by sheet.','paper',['paper_1763','paper_1682','paper_1687']],
@@ -499,7 +502,7 @@ function btsHTML(g,s){const t=x=>`<p class="tx">${x}</p>`;
  +`<div class="btr3">${bi('root_IMG_7989','2/3')}${bi('root_IMG_7990','2/3')}${bi('root_IMG_7991','2/3')}</div>`+bh('cards, ribbons and tags — the night before','right')+`<div class="btoff"><div class="cv" style="aspect-ratio:4/5;background-image:url(nastasija-media/bt_napkins.jpg);background-position:50% 50%"></div><div class="cv" style="aspect-ratio:4/5;margin-top:44px;background-image:url(nastasija-media/bts_cover.jpg);background-position:55% 50%"></div></div>`+bh('linen knotted by hand, flowers placed one by one')
  +`<div class="btb2">${bi('md_8141','auto','50% 40%')}<div>${bi('md_8118','3/4')}${bi('md_8354','3/4')}</div></div>`
  +`<div class="btoff">${bi('oy_3855','3/4')}${bi('oy_4013','3/4','50% 50%','margin-top:44px')}</div>`+bh('the studio, an hour before the club')
- +`<div class="btvr">${bv('zh')}<div>${bi('zh_7158','3/4')}${bi('zh_IMG_2215','3/4')}</div></div>`+bh('last flowers, last touches','right')
+ +`<div class="btvr">${bv('zh')}<div>${bi('zh_7158','3/4')}${bi('zh_IMG_2215','3/4')}</div></div>`+`<div class="cv" style="aspect-ratio:4/5;margin:0;background-image:url(nastasija-media/bt_zh_flowers.jpg);background-position:50% 50%"></div>`+bh('last flowers, last touches','right')
  +`<p style="margin:30px 0 0"><button class="b galb" data-pb="1">meet the hands behind the garden →</button></p>`
  +`<div class="nx"><button id="nx2">next: ${g.sec[4].t} →</button></div>`}
 function pbHTML(g,d){const t=x=>`<p class="tx">${x}</p>`,PB=d.d;
@@ -511,6 +514,7 @@ function pbHTML(g,d){const t=x=>`<p class="tx">${x}</p>`,PB=d.d;
  +PB.slice(0,4).map(t).join('')
  +PBH.map(hero).join('')
  +PB.slice(4,8).map(t).join('')+`<p class="btbig">${PB[8]}<br>${PB[9]}</p>`
+ +`<div class="pbl"><p class="bthh"><b>THE PEOPLE</b></p>${PEOPLE.map(([n,m,u])=>u?`<a class="row" href="${u}" target="_blank" rel="noopener"><span>${n}</span><span>${m} ↗</span></a>`:`<div class="row"><span>${n}</span><span>${m}</span></div>`).join('')}</div>`
  +`<div class="nx"><button data-b="1">← all days</button></div>`}
 ob.addEventListener('click',e=>{if(e.target.closest('[data-pb]'))openD(3)});
 </script>
