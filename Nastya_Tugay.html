@@ -182,13 +182,14 @@ const DAYS=[{t:'[BRAND / TITLE]',w:'[MONTH YEAR] · [CITY]'},{t:'[BRAND / TITLE]
 const gal=n=>`<div class="cnt">01 / 0${n}</div><div class="gal">${Array.from({length:n},(_,i)=>ph(i+2)).join('')}</div>`;
 
 // grid: checkerboard, white cards open sections, photos open the same section
+const WHEN=['JULY 2026 · MINSK','2026 · MINSK','AUGUST 2026 · MINSK','2026 · MINSK'];
 const GAL=['https://gelatin.gallery.photo/gallery/massimo-dutti-mskeyd/','https://gelatin.gallery.photo/gallery/zara-home-belarus-oip2j3/','https://gelatin.gallery.photo/gallery/oysho-belarus-9xzsyw/'];
 const galBtn=i=>`<p style="margin:30px 0 0"><a class="b" href="${GAL[i]}" target="_blank" rel="noopener">SEE ALL PHOTOS ↗</a></p>`;
 var NX=k=>k+1===2?3:k+1; // events tab removed
 const g=$('#grid');
 let gj=0;S.forEach((s,k)=>{if(k===2)return;const n=gj++;
   const c=`<button class="tile card" data-s="${k}"><strong>${s.k}</strong><small>(0${n+1})</small></button>`;
-  const p=`<button class="tile" data-s="${k}" aria-label="Open ${s.t}" style="background-image:var(--p${k+4});background-position:${POS[k]}"></button>`;
+  const p=`<button class="tile" data-s="${k}" aria-label="Open ${s.t}" style="background-image:var(--p${k===3?6:k+4});background-position:${POS[k===3?2:k]}"></button>`;
   g.insertAdjacentHTML('beforeend',n%2?p+c:c+p);
 });
 
@@ -291,14 +292,14 @@ const collage=()=>`<div class="col">${ph(3,'').replace('class="ph"','class="ph a
 const collageHR=()=>`<div class="col"><div class="cv a" style="background-image:var(--n6);background-position:50% 35%"></div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n7);background-position:50% 30%"></div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n8);background-position:50% 25%"></div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n9);background-position:50% 30%"></div></div>`;
 const flow=(ps,c)=>c+ps.map((p,i)=>`<p class="tx">${p}</p>`+(i==1?wide(2):i==3?pair(3):'')).join('');
 function secHTML(k){const g=GT(),s=g.sec[k];if(k==5&&typeof printHTML==='function')return printHTML(g,s);if(k==4&&typeof setHTML==='function')return setHTML(g,s);let h=`<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">${S[k].ja}</p>`;
- if(k==1)h+=`<p class="tx">${s.d[0]}</p><p class="hand" style="margin-top:20px">pick one ↓</p>`+g.days.map((x,i)=>`<button class="day" data-d="${i}">${cvr(DC[i],DP[i],'16/10').replace('margin:18px 0;','')}<span class="row"><span>(0${i+1})</span><span>[MONTH YEAR] · [CITY]</span></span><span class="row"><b>${x.b} / ${x.n}</b></span></button>`).join('');
- else h+=(k==6?cvr('p10','50% 50%')+s.d.map((p,i)=>`<p class="tx">${p}</p>`+(i==1?`<div class="cv" style="aspect-ratio:4/3;margin:22px 0;background-image:var(--n1);background-position:50% 55%"></div>`:i==3?`<div style="display:flex;gap:8px;margin:22px 0"><div class="cv" style="aspect-ratio:1;flex:1;background-image:var(--n2);background-position:50% 45%"></div><div class="cv" style="aspect-ratio:1;flex:1;background-image:var(--n3);background-position:50% 40%"></div></div>`:'')).join('')+`<div class="col4"><div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n5);background-position:50% 35%"></div><p class="t4">The curve of a stem can matter more than the flower itself.</p></div><div class="cv" style="aspect-ratio:3/5;background-image:var(--n4);background-position:50% 20%"></div></div>`:cvr(k==0?'q4':'p'+(k+4),'50% 50%')+s.d.map(p=>`<p class="tx">${p}</p>`).join('')+(k==0?collageHR():collage()));
+ if(k==1)h+=`<p class="tx">${s.d[0]}</p><p class="hand" style="margin-top:20px">pick one ↓</p>`+g.days.map((x,i)=>`<button class="day" data-d="${i}">${cvr(DC[i],DP[i],'16/10').replace('margin:18px 0;','')}<span class="row"><span>(0${i+1})</span><span>${WHEN[i]}</span></span><span class="row"><b>${x.b} / ${x.n}</b></span></button>`).join('');
+ else h+=(k==6?cvr('p10','50% 50%')+s.d.map((p,i)=>`<p class="tx">${p}</p>`+(i==1?`<div class="cv" style="aspect-ratio:4/3;margin:22px 0;background-image:var(--n1);background-position:50% 55%"></div>`:i==3?`<div style="display:flex;gap:8px;margin:22px 0"><div class="cv" style="aspect-ratio:1;flex:1;background-image:var(--n2);background-position:50% 45%"></div><div class="cv" style="aspect-ratio:1;flex:1;background-image:var(--n3);background-position:50% 40%"></div></div>`:'')).join('')+`<div class="col4"><div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n5);background-position:50% 35%"></div><p class="t4">The curve of a stem can matter more than the flower itself.</p></div><div class="cv" style="aspect-ratio:3/5;background-image:var(--n4);background-position:50% 20%"></div></div>`:cvr(k==0?'q4':k==3?'p6':'p'+(k+4),'50% 50%')+s.d.map(p=>`<p class="tx">${p}</p>`).join('')+(k==0?collageHR():collage()));
  return h+`<div class="nx"><button id="nx2">${k<6?'next: '+g.sec[NX(k)].t+' →':'← all work'}</button></div>`}
 function dayHTML(i){const g=GT(),d=g.days[i];
  if(i==0)return mdHTML(g,d);
  if(i==1)return zhHTML(g,d);
  if(i==2)return oyshoHTML(g,d);
- return `<p class="eb">0${i+1} / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">[MONTH YEAR] · [CITY]</p>`+flow(d.d,cvr(DC[i],DP[i]))+(i==0?`<p style="margin-top:28px"><button data-d="3">${g.more} →</button></p>`:'')+`<div class="nx"><button data-b="1">← all days</button>${i<3?`<button data-d="${i+1}">next: ${g.days[i+1].t} →</button>`:''}</div>`}
+ return `<p class="eb">0${i+1} / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">${WHEN[i]}</p>`+flow(d.d,cvr(DC[i],DP[i]))+(i==0?`<p style="margin-top:28px"><button data-d="3">${g.more} →</button></p>`:'')+`<div class="nx"><button data-b="1">← all days</button>${i<3?`<button data-d="${i+1}">next: ${g.days[i+1].t} →</button>`:''}</div>`}
 ob.addEventListener('click',e=>{if(e.target.closest('#nx2')){const k=view.s;if(k<6){view={s:NX(k)};show(secHTML(NX(k)))}else closeS()}});
 function applyLang(l){L=l;const g=GT();$$('[data-i]').forEach(el=>{const k=el.dataset.i;el.textContent=/^a\d$/.test(k)?g.a[+k[1]]:g[k]});
  [['en','en'],['ru','ru'],['jp','ja']].forEach(([id,c])=>$('#'+id).className=c===l?'on':'');document.documentElement.lang=l;
@@ -319,7 +320,7 @@ const OV={v3025:'nastasija-media/oysho-roof.mp4',v8214:'nastasija-media/oysho-te
 const oi=(n,r,p,x='')=>`<div class="cv" style="aspect-ratio:${r};background-image:var(--o${n});background-position:${p};${x}"></div>`;
 const ovd=(n,r,x='')=>`<video class="vd" style="aspect-ratio:${r};${x}" src="${OV['v'+n]}" autoplay muted loop playsinline></video>`;
 function oyshoHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
- return `<p class="eb">03 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">[MONTH YEAR] · [CITY]</p>`
+ return `<p class="eb">03 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">${WHEN[2]}</p>`
  +oi(5865,'16/10','50% 55%','margin:18px 0')+t(0)+t(1)
  +`<div class="ov3"><span class="hand" style="position:absolute;left:0;top:0">move like us ↘</span>${oi('hand','3/4','50% 40%','flex:1.15')}${oi(4677,'2/3','28% 50%','flex:1;margin-top:46px')}<span class="hand" style="position:absolute;right:0;bottom:0">↖ the club</span></div>`
  +t(2)
@@ -354,7 +355,7 @@ const zi=(n,r,p,x='')=>`<div class="cv" style="aspect-ratio:${r};background-imag
 function zhHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
  const qs=d.d[3].match(/[^?]+\?/g).map(x=>x.trim());
  const q2=d.d[2].split(':');
- return `<p class="eb">02 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">[MONTH YEAR] · [CITY]</p>`
+ return `<p class="eb">02 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">${WHEN[1]}</p>`
  +zi(7981,'3/2','50% 50%','margin:18px -22px;width:calc(100% + 44px)')+t(0)+t(1)
  +`<div class="zasym">${zi(7017,'auto','50% 50%')}${zi(7040,'auto','40% 50%')}</div>`
  +`<p class="tx">${q2[0]}:</p><div class="zqt"><p class="hand" style="margin:0 0 6px">the question ↓</p><p class="zbig">${(q2[1]||'').trim()}</p></div>`
@@ -380,7 +381,7 @@ function zhHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
 <script>
 const mi=(n,r,p,x='')=>`<div class="cv" style="aspect-ratio:${r};background-image:var(--m${n});background-position:${p};${x}"></div>`;
 function mdHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
- return `<p class="eb">01 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">[MONTH YEAR] · [CITY]</p>`
+ return `<p class="eb">01 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">${WHEN[0]}</p>`
  +cvr(DC[0],DP[0])
  +t(0)
  +`<div class="mnum"><b>9</b><p class="hand">years since the last<br>brand day for the store team</p></div>`
