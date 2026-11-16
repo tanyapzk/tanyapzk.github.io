@@ -292,7 +292,7 @@ const collage=()=>`<div class="col">${ph(3,'').replace('class="ph"','class="ph a
 const collageHR=()=>`<div class="col"><div class="cv a" style="background-image:var(--n6);background-position:50% 35%"></div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n7);background-position:50% 30%"></div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n8);background-position:50% 25%"></div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n9);background-position:50% 30%"></div></div>`;
 const flow=(ps,c)=>c+ps.map((p,i)=>`<p class="tx">${p}</p>`+(i==1?wide(2):i==3?pair(3):'')).join('');
 function secHTML(k){const g=GT(),s=g.sec[k];if(k==5&&typeof printHTML==='function')return printHTML(g,s);if(k==4&&typeof setHTML==='function')return setHTML(g,s);if(k==3&&typeof btsHTML==='function')return btsHTML(g,s);let h=`<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">${S[k].ja}</p>`;
- if(k==1)h+=`<p class="tx">${s.d[0]}</p><p class="hand" style="margin-top:20px">pick one ↓</p>`+g.days.map((x,i)=>`<button class="day" data-d="${i}">${cvr(DC[i],DP[i],'16/10').replace('margin:18px 0;','')}<span class="row"><span>(0${i+1})</span><span>${WHEN[i]}</span></span><span class="row"><b>${x.b} / ${x.n}</b></span></button>`).join('');
+ if(k==1)h+=`<p class="tx">${s.d[0]}</p><p class="hand" style="margin-top:20px">pick one ↓</p>`+[1,2,0,3].map((i,n)=>[g.days[i],i,n]).map(([x,i,n])=>`<button class="day" data-d="${i}">${cvr(DC[i],DP[i],'16/10').replace('margin:18px 0;','')}<span class="row"><span>(0${n+1})</span><span>${WHEN[i]}</span></span><span class="row"><b>${x.b} / ${x.n}</b></span></button>`).join('');
  else h+=(k==6?cvr('p10','50% 50%')+s.d.map((p,i)=>`<p class="tx">${p}</p>`+(i==1?`<div class="cv" style="aspect-ratio:4/3;margin:22px 0;background-image:var(--n1);background-position:50% 55%"></div>`:i==3?`<div style="display:flex;gap:8px;margin:22px 0"><div class="cv" style="aspect-ratio:1;flex:1;background-image:var(--n2);background-position:50% 45%"></div><div class="cv" style="aspect-ratio:1;flex:1;background-image:var(--n3);background-position:50% 40%"></div></div>`:'')).join('')+`<div class="col4"><div><div class="cv" style="aspect-ratio:4/3;background-image:var(--n5);background-position:50% 35%"></div><p class="t4">The curve of a stem can matter more than the flower itself.</p></div><div class="cv" style="aspect-ratio:3/5;background-image:var(--n4);background-position:50% 20%"></div></div>`:cvr(k==0?'q4':k==3?'p6':'p'+(k+4),'50% 50%')+s.d.map(p=>`<p class="tx">${p}</p>`).join('')+(k==0?collageHR():collage()));
  return h+`<div class="nx"><button id="nx2">${k<6?'next: '+g.sec[NX(k)].t+' →':'← all work'}</button></div>`}
 function dayHTML(i){const g=GT(),d=g.days[i];
@@ -321,7 +321,7 @@ const OV={v3025:'nastasija-media/oysho-roof.mp4',v8214:'nastasija-media/oysho-te
 const oi=(n,r,p,x='')=>`<div class="cv" style="aspect-ratio:${r};background-image:var(--o${n});background-position:${p};${x}"></div>`;
 const ovd=(n,r,x='')=>`<video class="vd" style="aspect-ratio:${r};${x}" src="${OV['v'+n]}" autoplay muted loop playsinline></video>`;
 function oyshoHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
- return `<p class="eb">03 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">${WHEN[2]}</p>`
+ return `<p class="eb">02 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">${WHEN[2]}</p>`
  +oi(5865,'16/10','50% 55%','margin:18px 0')+t(0)+t(1)
  +`<div class="ov3"><span class="hand" style="position:absolute;left:0;top:0">move like us ↘</span>${oi('hand','3/4','50% 40%','flex:1.15')}${oi(4677,'2/3','28% 50%','flex:1;margin-top:46px')}<span class="hand" style="position:absolute;right:0;bottom:0">↖ the club</span></div>`
  +t(2)
@@ -330,7 +330,7 @@ function oyshoHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
  +t(4)+t(5)
  +`<div class="ovt"><div>${oi(5497,'3/4','40% 50%')}<p class="hand">towels up, music on</p></div><div style="margin-top:40px">${oi(5719,'4/3','50% 35%')}${oi(5468,'4/3','50% 55%')}</div></div>`
  +t(6)+oi(6478,'6599/5279','50% 50%','margin:26px 0 0')
- +`${galBtn(2)}<div class="nx"><button data-b="1">← all days</button><button data-d="3">next: ${g.days[3].t} →</button></div>`}
+ +`${galBtn(2)}<div class="nx"><button data-b="1">← all days</button><button data-d="0">next: ${g.days[0].t} →</button></div>`}
 // tap a photo or video inside a section to see it larger
 document.body.insertAdjacentHTML('beforeend','<div id="lb" role="dialog" aria-label="Photo"><button class="x">× close</button><div id="lbi" style="display:contents"></div></div>');
 const lb=$('#lb');
@@ -356,7 +356,7 @@ const zi=(n,r,p,x='')=>`<div class="cv" style="aspect-ratio:${r};background-imag
 function zhHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
  const qs=d.d[3].match(/[^?]+\?/g).map(x=>x.trim());
  const q2=d.d[2].split(':');
- return `<p class="eb">02 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">${WHEN[1]}</p>`
+ return `<p class="eb">01 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">${WHEN[1]}</p>`
  +zi(7981,'3/2','50% 50%','margin:18px -22px;width:calc(100% + 44px)')+t(0)+t(1)
  +`<div class="zasym">${zi(7017,'auto','50% 50%')}${zi(7040,'auto','40% 50%')}</div>`
  +`<p class="tx">${q2[0]}:</p><div class="zqt"><p class="hand" style="margin:0 0 6px">the question ↓</p><p class="zbig">${(q2[1]||'').trim()}</p></div>`
@@ -382,7 +382,7 @@ function zhHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
 <script>
 const mi=(n,r,p,x='')=>`<div class="cv" style="aspect-ratio:${r};background-image:var(--m${n});background-position:${p};${x}"></div>`;
 function mdHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
- return `<p class="eb">01 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">${WHEN[0]}</p>`
+ return `<p class="eb">03 / 04</p><h2 class="t t2">${d.b} / ${d.n}</h2><p class="sub" style="text-align:right">${WHEN[0]}</p>`
  +cvr(DC[0],DP[0])
  +t(0)
  +`<div class="mnum"><b>9</b><p class="hand">years since the last<br>brand day for the store team</p></div>`
@@ -399,7 +399,7 @@ function mdHTML(g,d){const t=i=>`<p class="tx">${d.d[i]}</p>`;
  +`<div class="mstair">${mi(7229,'2/3','40% 50%')}${mi(6962,'2/3','50% 50%')}${mi(7226,'2/3','50% 40%')}</div>`
  +mi(9978,'4/5','50% 60%','margin:26px 0 0')
  +galBtn(0)+`<p style="margin-top:28px"><button data-d="3">${g.more} →</button></p>`
- +`<div class="nx"><button data-b="1">← all days</button><button data-d="1">next: ${g.days[1].t} →</button></div>`}
+ +`<div class="nx"><button data-b="1">← all days</button><button data-d="3">next: ${g.days[3].t} →</button></div>`}
 </script>
 <style>:root{--pr_md_5859:url(nastasija-media/pr_md_5859.jpg);--pr_md_5880:url(nastasija-media/pr_md_5880.jpg);--pr_md_6389:url(nastasija-media/pr_md_6389.jpg);--pr_md_6965:url(nastasija-media/pr_md_6965.jpg);--pr_md_9591:url(nastasija-media/pr_md_9591.jpg);--pr_oy_1676:url(nastasija-media/pr_oy_1676.jpg);--pr_oy_2512:url(nastasija-media/pr_oy_2512.jpg);--pr_oy_3802:url(nastasija-media/pr_oy_3802.jpg);--pr_oy_3861:url(nastasija-media/pr_oy_3861.jpg);--pr_table:url(nastasija-media/pr_table.jpg);--pr_oy_4751:url(nastasija-media/pr_oy_4751.jpg);--pr_oy_4785:url(nastasija-media/pr_oy_4785.jpg);--pr_oy_5276:url(nastasija-media/pr_oy_5276.jpg);--pr_oy_5331:url(nastasija-media/pr_oy_5331.jpg);--pr_oy_polaroid:url(nastasija-media/pr_oy_polaroid.jpg);--pr_zh_7751:url(nastasija-media/pr_zh_7751.jpg);--pr_zh_8872:url(nastasija-media/pr_zh_8872.jpg);--pr_zh_9491:url(nastasija-media/pr_zh_9491.jpg);--pr_zh_9645:url(nastasija-media/pr_zh_9645.jpg);--pr_zh_IMG_2402:url(nastasija-media/pr_zh_IMG_2402.jpg)}
 .prh{margin:30px 0 8px;font-size:15px;font-weight:500}
@@ -482,7 +482,7 @@ const PBH=[['(01) CLAY','PIU CERAMICS','Clay, shaped slowly and by hand.','potte
  ['(03) PAPER','MARINA','Paper made sheet by sheet.','paper',['paper_1763','paper_1682','paper_1687']],
  ['(04) IKEBANA','KIRILL & ANASTASIA','Line, form and the space between.','ikebana',['ik_1285','ik_1397','ik_1941']]];
 function btsHTML(g,s){const t=x=>`<p class="tx">${x}</p>`;
- return `<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">舞台裏</p>`+cvr('p6','50% 50%')
+ return `<h2 class="t">${s.t}</h2><p class="ja" style="margin:0 0 14px">舞台裏</p>`+`<div class="cv" style="aspect-ratio:3/2;margin:18px 0;background-image:url(nastasija-media/bts_cover.jpg);background-position:50% 45%"></div>`
  +t('The story before the event: preparation, and how everything comes together.')
  +t('Before anyone walks in, there are days of sorting, wrapping, printing, testing and setting. This is the part nobody sees — and the part I love most.')
  +`<div class="btr3">${bi('root_IMG_7989','2/3')}${bi('root_IMG_7990','2/3')}${bi('root_IMG_7991','2/3')}</div>`+bh('cards, ribbons and tags — the night before','right')
