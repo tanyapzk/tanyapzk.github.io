@@ -210,7 +210,7 @@ async function loadAll(){
   if (rs.exists()) S.roster = rs.data();
   else {
     try { const r = await fetch('seed.json',{cache:'no-store'}); if (r.ok){ S.roster = await r.json(); await setDoc(doc(db,'teacher','roster'), S.roster); toast('Список учеников загружен в базу'); } } catch(e){}
-    if (!S.roster) S.roster = {students:{}, order:[]};
+    if (!S.roster) { S.roster = {students:{}, order:[]}; S.noRoster = true; }
   }
   const q = query(collection(db,'submissions'), orderBy('submittedAt','desc'), limit(1000));
   S.subs = (await getDocs(q)).docs.map(d => ({id:d.id, ...d.data(), _at: tsToDate(d.data().submittedAt)}))
@@ -298,7 +298,7 @@ function bindSubs(root){
 
 function renderFeed(){
   const m=$('main'); const un=unreviewed(S.subs), done=S.subs.filter(s=>S.reviews[s.id]?.checked);
-  m.innerHTML = `<div class="top"><div><h1>Все сдачи</h1><div class="muted">${S.subs.length? `${S.subs.length} всего · ${un.length} ждут проверки`:'Пока никто ничего не сдал через кнопку'}</div></div></div>
+  m.innerHTML = (S.noRoster?'<div class="card" style="background:var(--amber-t);border:0;margin-bottom:16px"><b>Список учеников ещё не загружен.</b> Один раз откройте кабинет с этого Mac по ссылке <a href="http://localhost:8795/">localhost:8795</a> и войдите, затем обновите эту страницу.</div>':'') + `<div class="top"><div><h1>Все сдачи</h1><div class="muted">${S.subs.length? `${S.subs.length} всего · ${un.length} ждут проверки`:'Пока никто ничего не сдал через кнопку'}</div></div></div>
     ${un.length?`<div class="sec-h"><h2>Ждут проверки</h2></div>`+un.map(s=>subCard(s,true)).join(''):''}
     ${done.length?`<div class="sec-h"><h2>Проверено</h2></div>`+done.slice(0,40).map(s=>subCard(s,true)).join(''):''}
     ${!S.subs.length?'<div class="card empty">Когда ученик нажмёт «Send my homework», сдача появится здесь.</div>':''}`;
