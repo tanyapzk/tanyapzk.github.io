@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Teacher Room</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F4FA; --panel:#fff; --ink:#14162E; --muted:#6B6F8E; --line:#E4E6F2;
+  --nav:#171A3A; --nav2:#23275A;
+  --violet:#5B4BFF; --violet-t:#ECEAFF;
+  --coral:#FF5C5C; --coral-t:#FFE9E9;
+  --mint:#12B886; --mint-t:#DFF7EF;
+  --amber:#FFB020; --amber-t:#FFF3D9;
+  --sky:#2EA8FF; --sky-t:#E1F2FF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Manrope,system-ui,sans-serif}
+a{color:var(--violet);text-decoration:none;font-weight:600}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:"Space Grotesk",Manrope,sans-serif;letter-spacing:-.02em;margin:0}
+h1{font-size:30px}h2{font-size:21px;margin-bottom:4px}h3{font-size:16px}
+[hidden]{display:none !important}
+.ic{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+button{font:inherit;cursor:pointer}
+.btn{display:inline-flex;gap:8px;align-items:center;border:0;border-radius:12px;padding:10px 16px;font:600 14px Manrope;cursor:pointer}
+.btn-v{background:var(--violet);color:#fff}
+.btn-l{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn-m{background:var(--mint);color:#fff}
+.btn-s{padding:6px 12px;font-size:13px;border-radius:10px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.t-v{background:var(--violet-t);color:var(--violet)}.t-c{background:var(--coral-t);color:#D63A3A}.t-m{background:var(--mint-t);color:#0B8A64}
+.t-a{background:var(--amber-t);color:#A86B00}.t-s{background:var(--sky-t);color:#147CC4}.t-g{background:var(--bg);color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px}
+.muted{color:var(--muted)}
+input,select,textarea{font:inherit;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--bg)}
+textarea{width:100%;min-height:70px;resize:vertical}
+
+/* login */
+.login{min-height:100vh;display:grid;place-items:center;padding:16px;background:linear-gradient(135deg,#171A3A,#3A2C8F 60%,#6A3BC9)}
+.login .card{max-width:380px;width:100%;text-align:center;padding:32px}
+.logo{width:52px;height:52px;border-radius:16px;margin:0 auto 14px;background:linear-gradient(135deg,var(--violet),var(--coral));display:grid;place-items:center;color:#fff}
+.login p{color:var(--muted)}
+.gbtn{width:100%;justify-content:center;margin-top:10px}
+
+/* app */
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+.side{background:var(--nav);color:#C9CCEB;padding:22px 14px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;gap:10px;align-items:center;color:#fff;font-family:"Space Grotesk";font-weight:700;font-size:18px;padding:0 8px 18px}
+.brand span{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--violet),var(--coral));display:grid;place-items:center}
+.side .lbl{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:#7F84B8;padding:14px 10px 6px}
+.stu{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;cursor:pointer;color:#E6E8FF;width:100%;border:0;background:none;text-align:left}
+.stu:hover{background:var(--nav2)}
+.stu.on{background:var(--violet);color:#fff}
+.stu small{display:block;font-size:12px;opacity:.7}
+.badge{margin-left:auto;font-size:11px;font-weight:800;padding:2px 7px;border-radius:99px;background:var(--coral);color:#fff}
+.av{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-weight:800;color:#fff;flex:none;font-size:13px}
+.me{margin-top:18px;padding:10px;font-size:12.5px;color:#9EA3D6;border-top:1px solid var(--nav2)}
+.me button{background:none;border:0;color:#C9CCEB;text-decoration:underline;padding:0;font-size:12.5px}
+.main{padding:26px 30px 60px;max-width:1180px;width:100%}
+.top{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.top .av{width:62px;height:62px;border-radius:18px;font-size:24px}
+.top .acts{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;background:#fff;border:1px solid var(--line);padding:6px;border-radius:14px;width:fit-content;max-width:100%}
+.tabs button{color:var(--muted);padding:8px 14px;border-radius:10px;font-weight:600;border:0;background:none}
+.tabs button:hover{background:var(--bg)}
+.tabs button.on{background:var(--ink);color:#fff}
+.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}
+.kpi{border-radius:18px;padding:16px}
+.kpi .n{font-family:"Space Grotesk";font-size:30px;font-weight:700}
+.kpi .l{font-size:13.5px;opacity:.85}
+.k1{background:var(--violet);color:#fff}.k2{background:var(--mint-t)}.k3{background:var(--amber-t)}.k4{background:var(--coral-t)}
+.ai{background:linear-gradient(120deg,#1C1F4A,#3A2C8F 60%,#6A3BC9);color:#fff;border:0}
+.ai .h{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.ai .spark{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.14);display:grid;place-items:center}
+.ai ul{margin:0;padding-left:20px}.ai li{margin:6px 0}.ai b{color:#FFD66B}
+.ai .small{opacity:.7;font-size:13px;margin-top:10px}
+.sec-h{display:flex;align-items:end;gap:12px;justify-content:space-between;flex-wrap:wrap;margin:22px 0 12px}
+.sec-h p{margin:0;color:var(--muted)}
+.tl{width:100%;border-collapse:collapse}
+.tl th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:0 10px 10px;font-weight:700}
+.tl td{padding:12px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tl .d{font-family:"Space Grotesk";font-weight:700;white-space:nowrap}
+.tl small{color:var(--muted)}
+.score{font-family:"Space Grotesk";font-weight:700}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+/* topics stat */
+.trow{display:grid;grid-template-columns:1fr 70px;gap:4px 10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.trow:first-child{border-top:0}
+.bar{grid-column:1/3;height:8px;border-radius:99px;background:var(--bg);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px}
+.ex{background:var(--bg);border-radius:12px;padding:9px 12px;font-size:14px;margin-top:6px}
+.ex s{color:#D63A3A;text-decoration-thickness:2px}.ex ins{text-decoration:none;color:#0B8A64;font-weight:700}
+.gr{border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:10px;background:#fff}
+.gr-h{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.gr-h h3{margin-right:auto}
+.rec{display:flex;gap:10px;align-items:flex-start;background:var(--violet-t);border-radius:12px;padding:10px 12px;font-size:14px}
+.rec .ic{color:var(--violet);margin-top:2px}
+/* submission */
+.sub{border:1px solid var(--line);border-radius:18px;background:#fff;margin-bottom:12px;overflow:hidden}
+.sub-h{display:flex;gap:12px;align-items:center;padding:14px 18px;cursor:pointer;flex-wrap:wrap}
+.sub-h .tt{font-weight:700}
+.sub-h .r{margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.sub-b{padding:0 18px 18px;display:none}
+.sub.open .sub-b{display:block}
+.sec-t{font-weight:700;margin:16px 0 6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.it{background:var(--bg);border-radius:12px;padding:10px 12px;margin-bottom:6px;border-left:4px solid var(--line)}
+.it.ok{border-left-color:var(--mint)}.it.no{border-left-color:var(--coral);background:var(--coral-t)}
+.it .q{font-size:13.5px;color:var(--muted)}
+.it .a{font-weight:600;margin-top:2px;white-space:pre-wrap}
+.it .m{font-size:13.5px;color:#0B8A64;margin-top:4px}
+.it .a.none{color:var(--muted);font-weight:500;font-style:italic}
+.review{margin-top:16px;background:var(--violet-t);border-radius:14px;padding:14px;display:grid;gap:8px}
+.chev{transition:transform .2s}.sub.open .chev{transform:rotate(180deg)}
+.topic{display:flex;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.topic:first-of-type{border-top:0}
+.topic span{margin-right:auto}
+.addf{display:grid;grid-template-columns:140px 1fr 1fr;gap:8px;margin-top:12px}
+.addf input{width:100%}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;font-weight:600;z-index:20}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;height:auto;display:flex;gap:6px;overflow-x:auto;padding:10px}
+  .side .lbl,.brand,.me{display:none}
+  .stu{flex:none;width:auto}
+  .main{padding:18px 16px 50px}
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .g2,.addf{grid-template-columns:1fr}
+  .tl .hide-m{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="login" id="login">
+  <div class="card">
+    <div class="logo"><svg class="ic" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M4 19V5l8 4 8-4v14l-8 4z"/></svg></div>
+    <h1 style="font-size:26px">Teacher Room</h1>
+    <p id="loginMsg">Кабинет учителя. Вход только для владельца.</p>
+    <button class="btn btn-v gbtn" id="signin"><svg class="ic" viewBox="0 0 24 24"><path d="M21 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.1a4.4 4.4 0 0 1-1.9 2.9v2.4h3.1c1.8-1.7 2.7-4.1 2.7-7.1z"/><path d="M12 21c2.6 0 4.7-.9 6.3-2.3l-3.1-2.4c-.9.6-2 .9-3.2.9-2.5 0-4.6-1.7-5.3-3.9H3.5v2.5A9.5 9.5 0 0 0 12 21z"/></svg>Войти через Google</button>
+    <button class="btn btn-l gbtn" id="signoutBad" hidden>Выйти и войти другим аккаунтом</button>
+  </div>
+</div>
+
+<div class="app" id="app" hidden>
+  <aside class="side">
+    <div class="brand"><span><svg class="ic" viewBox="0 0 24 24" style="color:#fff"><path d="M4 19V5l8 4 8-4v14l-8 4z"/></svg></span>Teacher Room</div>
+    <button class="stu" data-view="feed" id="feedBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M4 4h16v12H5l-1 4z"/></svg><div>Все сдачи</div><span class="badge" id="feedBadge" hidden></span></button>
+    <div class="lbl">Ученики</div>
+    <div id="stuList"></div>
+    <div class="me"><div id="meMail"></div><button id="signout">Выйти</button></div>
+  </aside>
+  <main class="main" id="main"><div class="empty">Загрузка…</div></main>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+const TEACHER = 'tatyana.rominatanya@gmail.com';
+const fb = initializeApp({
+  apiKey: "AIzaSyDoBRB7z4Kywfv3uZi9h0CGGQObvKbtHbo",
+  authDomain: "vocabulary-app-50c24.firebaseapp.com",
+  projectId: "vocabulary-app-50c24"
+});
+const auth = getAuth(fb), db = getFirestore(fb);
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const IC = {
+  chev:'<svg class="ic chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>',
+  ext:'<svg class="ic" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg>',
+  bulb:'<svg class="ic" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg>',
+  spark:'<svg class="ic" viewBox="0 0 24 24"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></svg>',
+  check:'<svg class="ic" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M5 12l5 5L20 7"/></svg>'
+};
+const SHOW_TEST = new URLSearchParams(location.search).has('test');
+let S = { roster:null, subs:[], reviews:{}, analysis:{}, vocab:{}, view:'feed', student:null, tab:'overview' };
+
+function toast(t){ const el=$('toast'); el.textContent=t; el.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>el.hidden=true,2200); }
+const fmtDate = d => d ? new Date(d).toLocaleDateString('ru-RU',{day:'numeric',month:'short'}) : '';
+const fmtDT = d => d ? new Date(d).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
+const tsToDate = v => v && v.toDate ? v.toDate() : (v ? new Date(v) : null);
+
+/* ---------- auth ---------- */
+$('signin').onclick = async () => {
+  const p = new GoogleAuthProvider(); p.setCustomParameters({prompt:'select_account'});
+  try { await signInWithPopup(auth, p); }
+  catch(e){ if (String(e.code).includes('popup')) await signInWithRedirect(auth, p); else { $('loginMsg').textContent='Не получилось войти: '+e.code; } }
+};
+$('signout').onclick = $('signoutBad').onclick = () => signOut(auth);
+
+onAuthStateChanged(auth, async user => {
+  if (!user){ $('login').hidden=false; $('app').hidden=true; $('signoutBad').hidden=true; $('signin').hidden=false; $('loginMsg').textContent='Кабинет учителя. Вход только для владельца.'; return; }
+  if (user.email !== TEACHER){
+    $('login').hidden=false; $('app').hidden=true; $('signin').hidden=true; $('signoutBad').hidden=false;
+    $('loginMsg').textContent='У аккаунта '+user.email+' нет доступа к кабинету.'; return;
+  }
+  $('login').hidden=true; $('app').hidden=false; $('meMail').textContent=user.email;
+  await loadAll(); render();
+});
+
+/* ---------- data ---------- */
+async function loadAll(){
+  const rs = await getDoc(doc(db,'teacher','roster'));
+  if (rs.exists()) S.roster = rs.data();
+  else {
+    try { const r = await fetch('seed.json',{cache:'no-store'}); if (r.ok){ S.roster = await r.json(); await setDoc(doc(db,'teacher','roster'), S.roster); toast('Список учеников загружен в базу'); } } catch(e){}
+    if (!S.roster) S.roster = {students:{}, order:[]};
+  }
+  const q = query(collection(db,'submissions'), orderBy('submittedAt','desc'), limit(1000));
+  S.subs = (await getDocs(q)).docs.map(d => ({id:d.id, ...d.data(), _at: tsToDate(d.data().submittedAt)}))
+    .filter(s => SHOW_TEST || !String(s.student).startsWith('_'));
+  (await getDocs(collection(db,'teacher','reviews','items'))).forEach(d => S.reviews[d.id]=d.data());
+  (await getDocs(collection(db,'teacher','analysis','items'))).forEach(d => S.analysis[d.id]=d.data());
+  // students who submitted but are not in roster
+  S.subs.forEach(s => { if (!S.roster.students[s.student]) { S.roster.students[s.student]={name:s.student,level:'',about:'',color:'#6B6F8E',lessons:[],topics:{grammar:[],vocab:[]}}; S.roster.order.push(s.student); } });
+}
+async function saveRoster(){ await setDoc(doc(db,'teacher','roster'), S.roster); toast('Сохранено'); }
+async function loadVocab(id){
+  const st = S.roster.students[id]; if (!st?.vocabKey || S.vocab[id]!==undefined) return;
+  try { const d = await getDoc(doc(db,'students',st.vocabKey)); S.vocab[id] = d.exists()? d.data() : null; } catch(e){ S.vocab[id]=null; }
+}
+
+/* ---------- helpers ---------- */
+const subsOf = id => S.subs.filter(s => s.student===id);
+const unreviewed = list => list.filter(s => !S.reviews[s.id]?.checked);
+function quizStats(list){
+  let ok=0,total=0; const topics={};
+  list.forEach(s => (s.sections||[]).forEach(sec => (sec.items||[]).forEach(it => {
+    if (it.ok===true || it.ok===false){
+      total++; if (it.ok) ok++;
+      const t = topics[sec.topic] ||= {ok:0,total:0,wrong:[]};
+      t.total++; if (it.ok) t.ok++; else t.wrong.push({...it, hw:s.title});
+    }
+  })));
+  return {ok,total,pct: total? Math.round(ok/total*100):null, topics};
+}
+const pctColor = p => p>=80?'var(--mint)':p>=60?'var(--amber)':'var(--coral)';
+const scoreTag = p => p===null?'':`<span class="tag ${p>=80?'t-m':p>=60?'t-a':'t-c'}">${p}%</span>`;
+function subPct(s){ const q=quizStats([s]); return q.pct; }
+
+/* ---------- render ---------- */
+function render(){
+  const order = S.roster.order.filter(id => S.roster.students[id]);
+  $('stuList').innerHTML = order.map(id => {
+    const st=S.roster.students[id], n=unreviewed(subsOf(id)).length;
+    return `<button class="stu ${S.view==='student'&&S.student===id?'on':''}" data-id="${esc(id)}"><div class="av" style="background:${esc(st.color)}">${esc(st.name[0]||'?')}</div><div>${esc(st.name)}<small>${esc(st.level)}</small></div>${n?`<span class="badge">${n}</span>`:''}</button>`;
+  }).join('');
+  $('stuList').querySelectorAll('.stu').forEach(b => b.onclick = () => { S.view='student'; S.student=b.dataset.id; S.tab='overview'; render(); });
+  const nAll = unreviewed(S.subs).length; $('feedBadge').hidden=!nAll; $('feedBadge').textContent=nAll;
+  $('feedBtn').classList.toggle('on', S.view==='feed');
+  $('feedBtn').onclick = () => { S.view='feed'; render(); };
+  if (S.view==='feed') renderFeed(); else renderStudent();
+  window.scrollTo({top:0});
+}
+
+function subCard(s, withName){
+  const st=S.roster.students[s.student]||{name:s.student,color:'#6B6F8E'};
+  const rv=S.reviews[s.id]||{}, p=subPct(s);
+  const secs=(s.sections||[]).map(sec => {
+    const items=(sec.items||[]);
+    const q = items.filter(i=>i.ok===true||i.ok===false), ok=q.filter(i=>i.ok).length;
+    return `<div class="sec-t">${esc(sec.title)} <span class="tag t-g">${esc(sec.topic||'')}</span>${q.length?`<span class="tag ${ok===q.length?'t-m':'t-a'}">${ok}/${q.length}</span>`:''}</div>`+
+      (items.length? items.map(it => `<div class="it ${it.ok===true?'ok':it.ok===false?'no':''}"><div class="q">${esc(it.q)}</div>`+
+        `<div class="a ${it.a?'':'none'}">${it.a? esc(it.a) : 'нет ответа'}</div>`+
+        (it.correct && it.ok!==true ? `<div class="m">${sec.kind==='quiz'?'Правильно':'Образец'}: ${esc(it.correct)}</div>`:'')+`</div>`).join('')
+      : '<div class="muted" style="font-size:13.5px">Ученик не делал этот блок</div>');
+  }).join('');
+  return `<div class="sub" data-id="${esc(s.id)}">
+    <div class="sub-h">${withName?`<div class="av" style="background:${esc(st.color)}">${esc(st.name[0])}</div>`:''}
+      <div><div class="tt">${withName?esc(st.name)+' · ':''}${esc(s.title||s.homework)}</div><small class="muted">сдано ${fmtDT(s._at)}${s.activeMinutes?` · ${s.activeMinutes} мин`:''}${s.resend?' · отправлено повторно':''}</small></div>
+      <div class="r">${scoreTag(p)}${rv.checked?'<span class="tag t-m">'+IC.check+'проверено</span>':'<span class="tag t-a">ждёт проверки</span>'}${IC.chev}</div></div>
+    <div class="sub-b">${secs}
+      <div class="review"><b>Мой комментарий</b>
+        <textarea data-rv="${esc(s.id)}" placeholder="Заметки для себя или комментарий ученику">${esc(rv.comment||'')}</textarea>
+        <div class="row"><button class="btn btn-m btn-s" data-save="${esc(s.id)}">${rv.checked?'Сохранить':'Сохранить и отметить проверенным'}</button>
+        ${rv.checked?`<button class="btn btn-l btn-s" data-uncheck="${esc(s.id)}">Снять отметку</button>`:''}</div></div>
+    </div></div>`;
+}
+function bindSubs(root){
+  root.querySelectorAll('.sub-h').forEach(h => h.onclick = () => h.parentNode.classList.toggle('open'));
+  root.querySelectorAll('[data-save]').forEach(b => b.onclick = async () => {
+    const id=b.dataset.save, comment=root.querySelector(`[data-rv="${CSS.escape(id)}"]`).value;
+    S.reviews[id] = {checked:true, comment, at:new Date().toISOString()};
+    await setDoc(doc(db,'teacher','reviews','items',id), {...S.reviews[id], at:serverTimestamp()});
+    toast('Сохранено'); const open=[...root.querySelectorAll('.sub.open')].map(x=>x.dataset.id); render(); open.forEach(o=>document.querySelector(`.sub[data-id="${CSS.escape(o)}"]`)?.classList.add('open'));
+  });
+  root.querySelectorAll('[data-uncheck]').forEach(b => b.onclick = async () => {
+    const id=b.dataset.uncheck; S.reviews[id]={...(S.reviews[id]||{}),checked:false};
+    await setDoc(doc(db,'teacher','reviews','items',id), S.reviews[id]); render();
+  });
+}
+
+function renderFeed(){
+  const m=$('main'); const un=unreviewed(S.subs), done=S.subs.filter(s=>S.reviews[s.id]?.checked);
+  m.innerHTML = `<div class="top"><div><h1>Все сдачи</h1><div class="muted">${S.subs.length? `${S.subs.length} всего · ${un.length} ждут проверки`:'Пока никто ничего не сдал через кнопку'}</div></div></div>
+    ${un.length?`<div class="sec-h"><h2>Ждут проверки</h2></div>`+un.map(s=>subCard(s,true)).join(''):''}
+    ${done.length?`<div class="sec-h"><h2>Проверено</h2></div>`+done.slice(0,40).map(s=>subCard(s,true)).join(''):''}
+    ${!S.subs.length?'<div class="card empty">Когда ученик нажмёт «Send my homework», сдача появится здесь.</div>':''}`;
+  bindSubs(m);
+}
+
+async function renderStudent(){
+  const id=S.student, st=S.roster.students[id], m=$('main');
+  const list=subsOf(id), qs=quizStats(list), un=unreviewed(list).length;
+  const hwIds=(st.lessons||[]).filter(l=>l.hwId).map(l=>l.hwId), doneIds=new Set(list.map(s=>s.homework));
+  const mins=list.filter(s=>s.activeMinutes).map(s=>s.activeMinutes);
+  const tabs=[['overview','Обзор'],['lessons','Уроки и домашки'],['grammar','Грамматика'],['answers','Ответы'+(un?` <span class="tag t-c" style="padding:0 7px">${un}</span>`:'')],['topics','Пройденные темы'],['words','Слова']];
+  m.innerHTML = `<div class="top"><div class="av" style="background:${esc(st.color)}">${esc(st.name[0])}</div>
+      <div><h1>${esc(st.name)}</h1><div class="muted">${esc([st.level,st.about].filter(Boolean).join(' · '))}</div></div>
+      <div class="acts">${st.vocabUrl?`<a class="btn btn-l" href="${esc(st.vocabUrl)}" target="_blank" rel="noopener">Сайт со словами ${IC.ext}</a>`:''}</div></div>
+    <nav class="tabs">${tabs.map(t=>`<button data-tab="${t[0]}" class="${S.tab===t[0]?'on':''}">${t[1]}</button>`).join('')}</nav>
+    <div id="tabBody"></div>`;
+  m.querySelectorAll('.tabs button').forEach(b => b.onclick = () => { S.tab=b.dataset.tab; renderStudent(); });
+  const body=$('tabBody'), an=S.analysis[id];
+
+  if (S.tab==='overview'){
+    body.innerHTML = `<div class="grid g4" style="margin-bottom:16px">
+        <div class="kpi k1"><div class="n">${hwIds.filter(h=>doneIds.has(h)).length} / ${hwIds.length}</div><div class="l">домашек сдано через кнопку</div></div>
+        <div class="kpi k2"><div class="n">${qs.pct===null?'—':qs.pct+'%'}</div><div class="l">верных ответов с первой попытки</div></div>
+        <div class="kpi k3"><div class="n">${mins.length?Math.round(mins.reduce((a,b)=>a+b,0)/mins.length)+' мин':'—'}</div><div class="l">в среднем на домашку</div></div>
+        <div class="kpi k4"><div class="n">${un}</div><div class="l">ждут вашей проверки</div></div></div>
+      <div class="card ai"><div class="h"><div class="spark">${IC.spark}</div><h3>Анализ и рекомендации</h3></div>
+        ${an?.summary?.length? `<ul>${an.summary.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${an.nextLesson?`<p style="margin:12px 0 0"><b>На следующий урок:</b> ${esc(an.nextLesson)}</p>`:''}<div class="small">Обновлено ${esc(an.updated||'')}</div>`
+          : `<p style="margin:0">Анализа пока нет. Напишите Claude в чате: <b>«проанализируй ${esc(st.name)}»</b>, и здесь появятся главные ошибки и рекомендации к уроку.</p>`}
+      </div>
+      <div class="sec-h"><h2>Последние сдачи</h2></div>
+      ${list.length? list.slice(0,3).map(s=>subCard(s)).join('') : '<div class="card empty">Сдач через кнопку пока нет.</div>'}`;
+    bindSubs(body);
+  }
+
+  if (S.tab==='lessons'){
+    const ls=[...(st.lessons||[])].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+    body.innerHTML = `<div class="card" style="overflow-x:auto"><table class="tl">
+      <tr><th>Дата</th><th>Урок</th><th>Домашка</th><th>Сдача</th><th></th></tr>
+      ${ls.map((l,i)=>{ const s=list.find(x=>x.homework===l.hwId); const p=s?subPct(s):null; const idx=st.lessons.indexOf(l);
+        return `<tr><td class="d">${l.date?fmtDate(l.date):'—'}</td>
+          <td>${l.lessonUrl?`<a href="${esc(l.lessonUrl)}" target="_blank" rel="noopener">${esc(l.title)}</a>`:esc(l.title)}${(l.topics||[]).length?'<br>'+l.topics.map(t=>`<span class="tag t-s">${esc(t)}</span>`).join(' '):''}</td>
+          <td>${l.hwUrl?`<a href="${esc(l.hwUrl)}" target="_blank" rel="noopener">${esc(l.hwTitle||'домашка')}</a>`:'<small>—</small>'}</td>
+          <td>${s?`${scoreTag(p)} <small>${fmtDate(s._at)}${s.activeMinutes?' · '+s.activeMinutes+' мин':''}</small><br>${S.reviews[s.id]?.checked?'<span class="tag t-m">проверено</span>':'<span class="tag t-a">ждёт проверки</span>'}`: (l.hwId?'<span class="tag t-g">нет сдачи</span>':'')}</td>
+          <td><button class="btn btn-l btn-s" data-del="${idx}">Убрать</button></td></tr>`; }).join('') || '<tr><td colspan="5" class="empty">Уроков пока нет</td></tr>'}
+      </table>
+      <h3 style="margin-top:18px">Добавить урок</h3>
+      <div class="addf"><input type="date" id="nDate"><input id="nTitle" placeholder="Тема урока"><input id="nLesson" placeholder="Ссылка на урок (необязательно)">
+        <span></span><input id="nHwTitle" placeholder="Название домашки"><input id="nHw" placeholder="Ссылка на домашку"></div>
+      <div class="row" style="margin-top:8px"><input id="nTopics" placeholder="Темы через запятую: Present Perfect, Linking words" style="flex:1;min-width:220px"><button class="btn btn-v" id="nAdd">Добавить</button></div>
+    </div>`;
+    body.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => { if(!confirm('Убрать урок из списка?'))return; st.lessons.splice(+b.dataset.del,1); await saveRoster(); renderStudent(); });
+    $('nAdd').onclick = async () => {
+      const title=$('nTitle').value.trim(); if(!title){toast('Напишите тему урока');return;}
+      const hwUrl=$('nHw').value.trim(); const m2=hwUrl.match(/\/homework\/([^/]+\/[^/?#]+)/);
+      (st.lessons ||= []).push({date:$('nDate').value, title, lessonUrl:$('nLesson').value.trim(), hwTitle:$('nHwTitle').value.trim(), hwUrl, hwId:m2?m2[1]:'', topics:$('nTopics').value.split(',').map(x=>x.trim()).filter(Boolean)});
+      await saveRoster(); renderStudent();
+    };
+  }
+
+  if (S.tab==='grammar'){
+    const T=Object.entries(qs.topics).sort((a,b)=>(a[1].ok/a[1].total)-(b[1].ok/b[1].total));
+    body.innerHTML = `${an?.grammar?.length? `<div class="sec-h" style="margin-top:0"><div><h2>Грамматика: где ошибки</h2><p>Анализ всех ответов и текстов · обновлено ${esc(an.updated||'')}</p></div></div>
+      <div class="grid g2">${an.grammar.map(g=>`<div class="gr"><div class="gr-h"><h3>${esc(g.topic)}</h3>${g.count?`<span class="tag t-c">${esc(g.count)} ошиб.</span>`:''}${g.trend?`<span class="tag t-g">${esc(g.trend)}</span>`:''}</div>
+        ${(g.examples||[]).map(e=>`<div class="ex">${e.before?esc(e.before)+' ':''}<s>${esc(e.wrong)}</s> <ins>${esc(e.right)}</ins>${e.after?' '+esc(e.after):''}</div>`).join('')}
+        ${g.rec?`<div class="rec">${IC.bulb}<div><b>Рекомендация:</b> ${esc(g.rec)}</div></div>`:''}</div>`).join('')}</div>`
+      : `<div class="card ai" style="margin-bottom:16px"><div class="h"><div class="spark">${IC.spark}</div><h3>Разбор грамматики</h3></div><p style="margin:0">Подробного разбора пока нет. Напишите в чате <b>«проанализируй ${esc(st.name)}»</b>, и здесь появятся типичные ошибки с примерами и рекомендации.</p></div>`}
+      <div class="sec-h"><div><h2>Автопроверка по темам заданий</h2><p>Задания с одним правильным ответом, первая попытка</p></div></div>
+      <div class="card">${T.length? T.map(([t,v])=>{const p=Math.round(v.ok/v.total*100);return `<div class="trow"><div><b>${esc(t)}</b></div><div class="score" style="text-align:right">${p}%</div><div class="bar"><i style="width:${p}%;background:${pctColor(p)}"></i></div>
+        ${v.wrong.slice(0,3).map(w=>`<div class="ex" style="grid-column:1/3">${esc(w.q)}<br><s>${esc(w.a)}</s> <ins>${esc(w.correct)}</ins></div>`).join('')}</div>`;}).join('') : '<div class="empty">Данных пока нет: появятся после первых сдач.</div>'}</div>`;
+  }
+
+  if (S.tab==='answers'){
+    body.innerHTML = list.length? list.map(s=>subCard(s)).join('') : '<div class="card empty">Сдач через кнопку пока нет.</div>';
+    bindSubs(body);
+  }
+
+  if (S.tab==='topics'){
+    st.topics ||= {grammar:[],vocab:[]};
+    const block=(key,title)=>`<div class="card"><h3 style="margin-bottom:6px">${title}</h3>
+      ${(st.topics[key]||[]).map((t,i)=>`<div class="topic"><span>${esc(t.name)}</span><select data-k="${key}" data-i="${i}">${['усвоено','закрепляем','повторить'].map(o=>`<option ${t.status===o?'selected':''}>${o}</option>`).join('')}</select><button class="btn btn-l btn-s" data-rm="${key}" data-i="${i}">×</button></div>`).join('') || '<div class="muted">Пока пусто</div>'}
+      <div class="row" style="margin-top:10px"><input placeholder="Новая тема" data-new="${key}" style="flex:1"><button class="btn btn-v btn-s" data-add="${key}">Добавить</button></div></div>`;
+    body.innerHTML = `<div class="grid g2">${block('grammar','Грамматика')}${block('vocab','Лексика и навыки')}</div>`;
+    body.querySelectorAll('select').forEach(s=>s.onchange=async()=>{st.topics[s.dataset.k][+s.dataset.i].status=s.value;await saveRoster();});
+    body.querySelectorAll('[data-rm]').forEach(b=>b.onclick=async()=>{st.topics[b.dataset.rm].splice(+b.dataset.i,1);await saveRoster();renderStudent();});
+    body.querySelectorAll('[data-add]').forEach(b=>b.onclick=async()=>{const inp=body.querySelector(`[data-new="${b.dataset.add}"]`);const v=inp.value.trim();if(!v)return;(st.topics[b.dataset.add] ||= []).push({name:v,status:'закрепляем'});await saveRoster();renderStudent();});
+  }
+
+  if (S.tab==='words'){
+    if (!st.vocabKey){ body.innerHTML='<div class="card empty">У этого ученика нет сайта со словами.</div>'; return; }
+    body.innerHTML='<div class="card empty">Загрузка…</div>';
+    await loadVocab(id); const v=S.vocab[id];
+    if (!v){ body.innerHTML='<div class="card empty">Ученик ещё не открывал сайт со словами по своей ссылке.</div>'; return; }
+    const act=v.activity||{}, days=Object.keys(act).sort(), last=days[days.length-1];
+    const srs=v.srs||{}, words=Object.keys(srs).length, learned=Object.values(srs).filter(x=>x.st==='graduated').length;
+    const mins=Math.round(days.reduce((a,d)=>a+(act[d].sec||0),0)/60);
+    const acc=v.acc||{}, names={match:'Matching',quiz:'Multiple choice',scramble:'Sentence Builder',listen:'Listening',flash:'Flashcards'};
+    body.innerHTML = `<div class="grid g4" style="margin-bottom:16px">
+      <div class="kpi k1"><div class="n">${learned} / ${words}</div><div class="l">слов выучено (из начатых)</div></div>
+      <div class="kpi k2"><div class="n">${days.length}</div><div class="l">дней занималась</div></div>
+      <div class="kpi k3"><div class="n">${mins} мин</div><div class="l">всего на сайте</div></div>
+      <div class="kpi k4"><div class="n">${last?fmtDate(last):'—'}</div><div class="l">последний раз</div></div></div>
+      <div class="card"><h3 style="margin-bottom:6px">Точность по упражнениям</h3>
+      ${Object.entries(acc).map(([k,x])=>{const t=(x.ok||0)+(x.bad||0);const p=t?Math.round((x.ok||0)/t*100):0;return `<div class="trow"><div><b>${esc(names[k]||k)}</b> <small class="muted">${t} ответов</small></div><div class="score" style="text-align:right">${p}%</div><div class="bar"><i style="width:${p}%;background:${pctColor(p)}"></i></div></div>`;}).join('') || '<div class="muted">Нет данных</div>'}
+      <p style="margin:14px 0 0"><a href="${esc(st.vocabUrl)}" target="_blank" rel="noopener">Открыть сайт со словами ${IC.ext}</a></p></div>`;
+  }
+}
+</script>
+</body>
+</html>
